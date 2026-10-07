@@ -1,6 +1,7 @@
 /*FONTS*/
 
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Rajdhani:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap");
 
 :root {
   --app-bg-light: rgba(220, 218, 214, 1);
@@ -19,4 +20,19 @@
   --hover-overlay-dark: rgba(245, 242, 235, 0.06);
   --shadow-light: rgba(20, 22, 25, 0.08);
   --shadow-dark: rgba(0, 0, 0, 0.24);
+  --city-name-font: "DM Serif Display";
+  --city-name-wgt: 400;
+  --city-name-size: 2.5rem;
+  --main-temp: "DM Serif Display";
+  --main-temp-wgt: 400;
+  --main-temp-size: 6.5rem;
+  --week-forecast: "manrope";
+  --week-wgt: 600;
+  --week-size: 1.6rem;
+  --date: "manrope";
+  --date-wgt: 400;
+  --date-size: 1.25rem;
+  --hourly-temp: "manrope";
+  --hourly-wgt: 500;
+  --hourly-size: 1.25rem;
 }

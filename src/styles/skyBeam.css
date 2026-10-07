@@ -43,3 +43,13 @@
   letter-spacing: 0.12rem;
   font-weight: 400;
 }
+
+.searchbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  margin-left: 25%;
+  border-radius: 2rem;
+  width: 20rem;
+}

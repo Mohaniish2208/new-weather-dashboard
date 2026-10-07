@@ -15,6 +15,7 @@ export default function SkyBeam() {
               </div>
             </div>
           </div>
+          <input className="searchbar" placeholder="Search the city" type="form" />
         </div>
       </div>
     </main>
