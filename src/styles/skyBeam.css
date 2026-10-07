@@ -9,24 +9,37 @@
 }
 
 .icon {
-  height: 3rem;
-  width: 3rem;
+  height: 5rem;
+  width: 5rem;
   padding: 0;
+}
+
+.title-and-text {
+  padding-top: 0.3rem;
+  line-height: 1.8rem;
 }
 
 .title {
   font-family: "manrope";
-  font-size: 2.5rem;
+  font-size: 2rem;
   margin: 0;
+  letter-spacing: -0.03rem;
+}
+
+.supportive-text-container {
+  font-size: 0.9rem;
 }
 
 .supportive-text-1 {
-  font-size: 1rem;
+  font-family: "manrope";
   font-style: italic;
+  letter-spacing: 0.12rem;
+  font-weight: 400;
 }
 
 .supportive-text-2 {
-  font-size: 1rem;
   font-style: italic;
   color: rgb(255, 162, 0);
+  letter-spacing: 0.12rem;
+  font-weight: 400;
 }

@@ -1,3 +1,22 @@
 /*FONTS*/
 
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Rajdhani:wght@300;400;500;600;700&display=swap");
+
+:root {
+  --app-bg-light: rgba(220, 218, 214, 1);
+  --app-bg-dark: rgba(20, 22, 25, 1);
+  --logo-txt-light: rgba(38, 40, 43, 1);
+  --logo-txt-dark: rgba(245, 242, 235, 1);
+  --borders-and-dividers-light: rgba(38, 40, 43, 0.12);
+  --borders-and-dividers-dark: rgba(245, 242, 235, 0.12);
+  --blue-accent-light: rgba(66, 107, 145, 1);
+  --blue-accent-dark: rgba(139, 179, 215, 1);
+  --gold-accent-light: rgba(145, 108, 42, 1);
+  --gold-accent-dark: rgba(218, 182, 112, 1);
+  --selected-bg-light: rgba(66, 107, 145, 0.1);
+  --selected-bg-dark: rgba(139, 179, 215, 0.12);
+  --hover-overlay-light: rgba(38, 40, 43, 0.05);
+  --hover-overlay-dark: rgba(245, 242, 235, 0.06);
+  --shadow-light: rgba(20, 22, 25, 0.08);
+  --shadow-dark: rgba(0, 0, 0, 0.24);
+}
