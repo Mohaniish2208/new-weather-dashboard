@@ -5,7 +5,8 @@
   flex-direction: row;
   align-items: center;
   gap: 0.5rem;
-  padding: 1rem;
+  padding: 1rem 6rem;
+  border-bottom: 1px solid rgb(172, 172, 172);
 }
 
 .icon {
@@ -48,9 +49,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0.5rem;
+  padding: 0.6rem;
   margin-left: 25%;
+  margin-right: 3%;
   border-radius: 2rem;
+  border: 1px solid rgb(209, 213, 219);
+  background: rgb(229, 231, 235);
   width: 20rem;
 }
 
@@ -93,6 +97,21 @@
 }
 
 .unit-toggle:focus-visible {
-  outline: 0.1rem solid blue;
+  outline: 0.1rem solid rgb(0, 0, 255);
   outline-offset: 0.2rem;
+}
+
+.unit-toggle:not(.is-fahrenheit) .unit-label:nth-child(2) {
+  color: rgb(84, 120, 253);
+  font-weight: 700;
+}
+
+.unit-toggle.is-fahrenheit .unit-label:nth-child(3) {
+  color: rgb(84, 120, 253);
+  font-weight: 700;
+}
+
+.button-container {
+  border-left: 1px solid rgb(172, 172, 172);
+  padding-left: 2%;
 }
