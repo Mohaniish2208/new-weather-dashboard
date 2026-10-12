@@ -38,7 +38,10 @@
   --date-font: "manrope";
   --date-wgt: 400;
   --date-size: 1.25rem;
-  --hourly-temp: "manrope";
+  --today-font: "manrope";
+  --today-size: 1.6rem;
+  --today-wgt: 700;
+  --hourly-temp-font: "manrope";
   --hourly-wgt: 500;
   --hourly-size: 1.25rem;
 }

@@ -57,7 +57,37 @@ export default function SkyBeam() {
         </div>
       </section>
       <hr className="divider-page" />
-      <section></section>
+      <section className="today-section">
+        <h1 className="today">Today</h1>
+        <div className="hourly-container">
+          <div className="present">
+            <div className="now">Now</div>
+            <img />
+            <div className="temparature">20°</div>
+          </div>
+          <div className="present-plus-1">
+            <div className="now">1 pm</div>
+            <img />
+            <div className="temparature">20°</div>
+          </div>
+          <div className="present-plus-2">
+            <div className="now">2 pm</div>
+            <img />
+            <div className="temparature">20°</div>
+          </div>
+          <div className="present-plus-3">
+            <div className="now">3 pm</div>
+            <img />
+            <div className="temparature">20°</div>
+          </div>
+          <div className="present-plus-4">
+            <div className="now">4 pm</div>
+            <img />
+            <div className="temparature">20°</div>
+          </div>
+        </div>
+      </section>
+      <hr className="divider-page" />
     </main>
   )
 }

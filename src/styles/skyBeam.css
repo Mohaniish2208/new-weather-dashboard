@@ -192,3 +192,29 @@
   flex-direction: row;
   gap: 0.5rem;
 }
+
+.today-section {
+  padding: 0 9rem;
+}
+
+.today {
+  font-family: var(--today-font);
+  font-size: var(--today-size);
+  font-weight: var(--today-wgt);
+}
+
+.hourly-container {
+  display: flex;
+  flex-direction: row;
+  gap: 7.5rem;
+}
+
+.present,
+.present-plus-1,
+.present-plus-2,
+.present-plus-3,
+.present-plus-4 {
+  font-family: var(--hourly-temp-font);
+  font-size: var(--hourly-size);
+  font-weight: var(--hourly-wgt);
+}
