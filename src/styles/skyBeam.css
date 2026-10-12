@@ -6,7 +6,14 @@
   align-items: center;
   gap: 0.5rem;
   padding: 1rem 6rem;
-  border-bottom: 1px solid rgb(172, 172, 172);
+}
+
+.divider-header {
+  width: 90%;
+}
+
+.divider-page {
+  width: 80%;
 }
 
 .icon {
@@ -114,4 +121,69 @@
 .button-container {
   border-left: 1px solid rgb(172, 172, 172);
   padding-left: 2%;
+}
+
+.section-container {
+  padding: 0 9rem;
+}
+
+.city {
+  font-family: var(--city-name-font);
+  font-size: var(--city-name-size);
+  font-weight: var(--city-name-wgt);
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.date {
+  font-family: var(--date-font);
+  font-size: var(--date-size);
+  font-weight: var(--date-wgt);
+  padding: 0 0 0 0.5rem;
+}
+
+.weather-symbol {
+  height: 4.5rem;
+  width: 4.5rem;
+}
+
+.weather-section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.degrees {
+  font-family: var(--main-temp);
+  font-size: var(--main-temp-size);
+  font-weight: var(--main-temp-wgt);
+}
+
+.description-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.description {
+  display: flex;
+  font-size: 1.5rem;
+  font-family: var(--description);
+  font-size: var(--description-size);
+  font-weight: var(--description-wgt);
+}
+
+.feels-like,
+.high,
+.low {
+  font-family: var(--feels-like-details);
+  font-size: var(--feels-like-size);
+  font-weight: var(--feels-like-wgt);
+}
+
+.feels-like-container {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 0.5rem;
 }

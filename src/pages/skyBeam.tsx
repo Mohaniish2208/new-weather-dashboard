@@ -36,6 +36,7 @@ export default function SkyBeam() {
             </button>
           </div>
         </div>
+        <hr className="divider-header" />
       </div>
       <section className="section-container">
         <h1 className="city">Toronto, ON</h1>
@@ -45,14 +46,17 @@ export default function SkyBeam() {
           <div className="degrees">36°C</div>
           <div className="description-container">
             <div className="description">Partly Cloudy</div>
-            <div className="feels-like">Feels like 30°</div>
-            <div className="dot">&#8226;</div>
-            <div className="high">High 36°</div>
-            <div className="dot">&#8226;</div>
-            <div className="low">Low 27°</div>
+            <div className="feels-like-container">
+              <div className="feels-like">Feels like 30°</div>
+              <div className="dot">&#8226;</div>
+              <div className="high">High 36°</div>
+              <div className="dot">&#8226;</div>
+              <div className="low">Low 27°</div>
+            </div>
           </div>
         </div>
       </section>
+      <hr className="divider-page" />
       <section></section>
     </main>
   )
