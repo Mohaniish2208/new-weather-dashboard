@@ -65,6 +65,11 @@
   width: 20rem;
 }
 
+.searchbar::placeholder {
+  font-family: "manrope", sans-serif;
+  font-weight: 600;
+}
+
 .unit-toggle {
   position: relative;
   display: grid;
