@@ -37,6 +37,23 @@ export default function SkyBeam() {
           </div>
         </div>
       </div>
+      <section className="section-container">
+        <h1 className="city">Toronto, ON</h1>
+        <div className="date">Monday, November 15</div>
+        <div className="weather-section">
+          <img className="weather-symbol" src="../src/assets/partly-cloudy.svg" alt="weather-symbol" />
+          <div className="degrees">36°C</div>
+          <div className="description-container">
+            <div className="description">Partly Cloudy</div>
+            <div className="feels-like">Feels like 30°</div>
+            <div className="dot">&#8226;</div>
+            <div className="high">High 36°</div>
+            <div className="dot">&#8226;</div>
+            <div className="low">Low 27°</div>
+          </div>
+        </div>
+      </section>
+      <section></section>
     </main>
   )
 }
