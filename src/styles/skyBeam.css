@@ -129,7 +129,7 @@
 }
 
 .section-container {
-  padding: 0 9rem;
+  padding: 0 20rem;
 }
 
 .city {
@@ -194,7 +194,7 @@
 }
 
 .today-section {
-  padding: 1rem 9rem;
+  padding: 1rem 20rem;
 }
 
 .today {
@@ -220,4 +220,10 @@
   font-family: var(--hourly-temp-font);
   font-size: var(--hourly-size);
   font-weight: var(--hourly-wgt);
+  gap: 0.8rem;
+}
+
+.hourly-img {
+  height: 2rem;
+  width: 2rem;
 }

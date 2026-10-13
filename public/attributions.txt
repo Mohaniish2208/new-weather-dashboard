@@ -1,1 +1,6 @@
-<a href="https://www.flaticon.com/free-icons/partly-cloudy" title="partly-cloudy icons">Partly-cloudy icons created by Sudowoodo - Flaticon</a>
+1) <a href="https://www.flaticon.com/free-icons/partly-cloudy" title="partly-cloudy icons">Partly-cloudy icons created by Sudowoodo - Flaticon</a>
+
+2) <a href="https://www.flaticon.com/free-icons/sunny" title="sunny icons">Sunny icons created by bqlqn - Flaticon</a>
+3) <a href="https://www.flaticon.com/free-icons/rain" title="rain icons">Rain icons created by Uniconlabs - Flaticon</a>
+4) <a href="https://www.flaticon.com/free-icons/thunderstorm" title="thunderstorm icons">Thunderstorm icons created by Graficon - Flaticon</a>
+5) <a href="https://www.flaticon.com/free-icons/cloudy" title="cloudy icons">Cloudy icons created by Magnific - Flaticon</a>

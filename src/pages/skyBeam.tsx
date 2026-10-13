@@ -62,27 +62,27 @@ export default function SkyBeam() {
         <div className="hourly-container">
           <div className="present">
             <div className="now">Now</div>
-            <img />
+            <img className="hourly-img" src="../src/assets/partly-cloudy.svg" />
             <div className="temparature">20°</div>
           </div>
           <div className="present-plus-1">
             <div className="now">1 pm</div>
-            <img />
+            <img className="hourly-img" src="../src/assets/cloudy.svg" />
             <div className="temparature">20°</div>
           </div>
           <div className="present-plus-2">
             <div className="now">2 pm</div>
-            <img />
+            <img className="hourly-img" src="../src/assets/partly-cloudy.svg" />
             <div className="temparature">20°</div>
           </div>
           <div className="present-plus-3">
             <div className="now">3 pm</div>
-            <img />
+            <img className="hourly-img" src="../src/assets/sunny.svg" />
             <div className="temparature">20°</div>
           </div>
           <div className="present-plus-4">
             <div className="now">4 pm</div>
-            <img />
+            <img className="hourly-img" src="../src/assets/sunny.svg" />
             <div className="temparature">20°</div>
           </div>
         </div>
