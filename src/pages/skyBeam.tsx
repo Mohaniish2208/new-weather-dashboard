@@ -88,6 +88,79 @@ export default function SkyBeam() {
         </div>
       </section>
       <hr className="divider-page" />
+      <section className="forecast-section">
+        <div className="forecast-header">
+          <div className="forecast-title">5-day forecast</div>
+          <div className="hi-lo-section">
+            <div className="high">High</div>
+            <div className="low">Low</div>
+          </div>
+        </div>
+        <hr className="sub-divider" />
+
+        <div className="today-sub-section">
+          <div className="current-day">Today</div>
+          <img className="weather-img" src="../src/assets/partly-cloudy.svg" />
+          <div className="sub-weather">Partly Cloudy</div>
+          <div className="sub-hi">20°</div>
+          <div className="sub-lo">17°</div>
+        </div>
+        <hr className="sub-divider" />
+
+        <div className="sub-section">
+          <div className="tuesday">Tue</div>
+          <img className="weather-img" src="../src/assets/partly-cloudy.svg" />
+          <div className="sub-weather">Partly Cloudy</div>
+          <div className="sub-hi">20°</div>
+          <div className="sub-lo">17°</div>
+        </div>
+        <hr className="sub-divider" />
+
+        <div className="sub-section">
+          <div className="wednesday">Wed</div>
+          <img className="weather-img" src="../src/assets/partly-cloudy.svg" />
+          <div className="sub-weather">Partly Cloudy</div>
+          <div className="sub-hi">20°</div>
+          <div className="sub-lo">17°</div>
+        </div>
+        <hr className="sub-divider" />
+
+        <div className="sub-section">
+          <div className="thursday">Thu</div>
+          <img className="weather-img" src="../src/assets/partly-cloudy.svg" />
+          <div className="sub-weather">Partly Cloudy</div>
+          <div className="sub-hi">20°</div>
+          <div className="sub-lo">17°</div>
+        </div>
+        <hr className="sub-divider" />
+
+        <div className="sub-section">
+          <div className="friday">Fri</div>
+          <img className="weather-img" src="../src/assets/partly-cloudy.svg" />
+          <div className="sub-weather">Partly Cloudy</div>
+          <div className="sub-hi">20°</div>
+          <div className="sub-lo">17°</div>
+        </div>
+        <hr className="sub-divider" />
+
+        <div className="sub-section">
+          <div className="saturday">Sat</div>
+          <img className="weather-img" src="../src/assets/partly-cloudy.svg" />
+          <div className="sub-weather">Partly Cloudy</div>
+          <div className="sub-hi">20°</div>
+          <div className="sub-lo">17°</div>
+        </div>
+        <hr className="sub-divider" />
+
+        <div className="sub-section">
+          <div className="sunday">Sun</div>
+          <img className="weather-img" src="../src/assets/partly-cloudy.svg" />
+          <div className="sub-weather">Partly Cloudy</div>
+          <div className="sub-hi">20°</div>
+          <div className="sub-lo">17°</div>
+        </div>
+      </section>
+      <hr className="divider-page" />
     </main>
   )
 }

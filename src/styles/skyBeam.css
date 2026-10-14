@@ -223,7 +223,96 @@
   gap: 0.8rem;
 }
 
+.hi-lo-section {
+  display: flex;
+  flex-direction: row;
+  gap: 150%;
+}
+
 .hourly-img {
   height: 2rem;
   width: 2rem;
+}
+
+.current-day,
+.tuesday,
+.wednesday,
+.thursday,
+.friday,
+.saturday,
+.sunday {
+  padding: 0;
+}
+
+.today-sub-section {
+  display: flex;
+  flex-direction: row;
+}
+
+.sub-section {
+  display: flex;
+  flex-direction: row;
+}
+
+.weather-img {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.forecast-section {
+  width: 90%;
+  max-width: 44rem;
+  margin: 0 auto;
+  font-family: "manrope";
+  color: rgb(16, 38, 56);
+}
+
+.forecast-header,
+.today-sub-section,
+.sub-section {
+  display: grid;
+  grid-template-columns: 6rem 2rem 1fr 5rem 5rem;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.forecast-header {
+  padding: 1rem 0 0.75rem;
+}
+
+.forecast-title {
+  grid-column: 1/4;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.hi-lo-section {
+  grid-column: 4 / 6;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.sub-hi,
+.sub-lo {
+  font-family: "manrope";
+  text-align: center;
+}
+
+.forecast-section .hi-lo-section > div {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: #60758b;
+  text-align: center;
+}
+
+.sub-weather,
+.sub-lo {
+  color: #60758b;
+}
+
+.today-sub-section,
+.sub-section {
+  padding: 0.5rem 0;
+  font-size: 0.85rem;
 }
