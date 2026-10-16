@@ -1,13 +1,46 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import "../styles/skyBeam.css"
 import "../styles/style.css"
+import { getWeather } from "./api"
 
 export default function SkyBeam() {
   const [unit, setUnit] = useState<"C" | "F">("C")
+  const [temparature, setTemparature] = useState<number | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   function toggleUnit() {
     setUnit((current) => (current === "C" ? "F" : "C"))
   }
+
+  useEffect(() => {
+    let ignore = false
+
+    async function loadWeather() {
+      try {
+        const weather = await getWeather(43.6532, -79.3832)
+
+        if (!ignore) setTemparature(weather.temparature)
+      } catch (error) {
+        if (!ignore) {
+          setError(error instanceof Error ? error.message : "Unable to load the weather.")
+        }
+      } finally {
+        if (!ignore) {
+          setLoading(false)
+        }
+      }
+    }
+
+    void loadWeather()
+
+    return () => {
+      ignore = true
+    }
+  }, [])
+
+  const displayedTemparature = temparature === null ? null : unit === "F" ? temparature * (9 / 5) + 32 : temparature
+
   return (
     <main className="main-container">
       <div className="site-container">
