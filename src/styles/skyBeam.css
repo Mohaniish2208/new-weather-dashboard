@@ -165,6 +165,14 @@
   font-weight: var(--main-temp-wgt);
 }
 
+.loading-txt,
+.error-msg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
 .description-container {
   display: flex;
   flex-direction: column;

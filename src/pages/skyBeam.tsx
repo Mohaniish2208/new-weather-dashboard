@@ -5,7 +5,10 @@ import { getWeather } from "./api"
 
 export default function SkyBeam() {
   const [unit, setUnit] = useState<"C" | "F">("C")
-  const [temparature, setTemparature] = useState<number | null>(null)
+  const [temperature, settemperature] = useState<number | null>(null)
+  const [feelsLike, setFeelsLike] = useState<number | null>(null)
+  const [high, setHigh] = useState<number | null>(null)
+  const [low, setLow] = useState<number | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -20,7 +23,12 @@ export default function SkyBeam() {
       try {
         const weather = await getWeather(43.6532, -79.3832)
 
-        if (!ignore) setTemparature(weather.temparature)
+        if (!ignore) {
+          settemperature(weather.temperature)
+          setFeelsLike(weather.feelsLike)
+          setHigh(weather.high)
+          setLow(weather.low)
+        }
       } catch (error) {
         if (!ignore) {
           setError(error instanceof Error ? error.message : "Unable to load the weather.")
@@ -39,7 +47,10 @@ export default function SkyBeam() {
     }
   }, [])
 
-  const displayedTemparature = temparature === null ? null : unit === "F" ? temparature * (9 / 5) + 32 : temparature
+  const displayedtemperature = temperature === null ? null : unit === "F" ? temperature * (9 / 5) + 32 : temperature
+  const displayedFeelsLike = feelsLike === null ? null : unit === "F" ? feelsLike * (9 / 5) + 32 : feelsLike
+  const displayedHigh = high === null ? null : unit === "F" ? high * (9 / 5) + 32 : high
+  const displayedLow = low === null ? null : unit === "F" ? low * (9 / 5) + 32 : low
 
   return (
     <main className="main-container">
@@ -76,15 +87,31 @@ export default function SkyBeam() {
         <div className="date">Monday, November 15</div>
         <div className="weather-section">
           <img className="weather-symbol" src="../src/assets/partly-cloudy.svg" alt="weather-symbol" />
-          <div className="degrees">36°C</div>
+          <div className="degrees">
+            {loading ? (
+              <span className="loading-txt">{"Loading"}</span>
+            ) : error ? (
+              <span className="error-msg">{error}</span>
+            ) : (
+              `${displayedtemperature?.toFixed(0)}°${unit}`
+            )}
+          </div>
           <div className="description-container">
             <div className="description">Partly Cloudy</div>
             <div className="feels-like-container">
-              <div className="feels-like">Feels like 30°</div>
+              <div className="feels-like">
+                {loading || error || displayedFeelsLike === null
+                  ? "Feels like -"
+                  : `Feels Like ${displayedFeelsLike.toFixed(0)}°${unit}`}
+              </div>
               <div className="dot">&#8226;</div>
-              <div className="high">High 36°</div>
+              <div className="high">
+                {loading || error || displayedHigh === null ? "High -" : `High ${displayedHigh.toFixed(0)}°${unit}`}
+              </div>
               <div className="dot">&#8226;</div>
-              <div className="low">Low 27°</div>
+              <div className="low">
+                {loading || error || displayedLow === null ? "Low -" : `Low ${displayedLow.toFixed(0)}°${unit}`}
+              </div>
             </div>
           </div>
         </div>
@@ -96,27 +123,27 @@ export default function SkyBeam() {
           <div className="present">
             <div className="now">Now</div>
             <img className="hourly-img" src="../src/assets/partly-cloudy.svg" />
-            <div className="temparature">20°</div>
+            <div className="temperature">20°</div>
           </div>
           <div className="present-plus-1">
             <div className="now">1 pm</div>
             <img className="hourly-img" src="../src/assets/cloudy.svg" />
-            <div className="temparature">20°</div>
+            <div className="temperature">20°</div>
           </div>
           <div className="present-plus-2">
             <div className="now">2 pm</div>
             <img className="hourly-img" src="../src/assets/partly-cloudy.svg" />
-            <div className="temparature">20°</div>
+            <div className="temperature">20°</div>
           </div>
           <div className="present-plus-3">
             <div className="now">3 pm</div>
             <img className="hourly-img" src="../src/assets/sunny.svg" />
-            <div className="temparature">20°</div>
+            <div className="temperature">20°</div>
           </div>
           <div className="present-plus-4">
             <div className="now">4 pm</div>
             <img className="hourly-img" src="../src/assets/sunny.svg" />
-            <div className="temparature">20°</div>
+            <div className="temperature">20°</div>
           </div>
         </div>
       </section>
