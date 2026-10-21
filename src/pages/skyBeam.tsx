@@ -2,15 +2,23 @@ import { useEffect, useState } from "react"
 import "../styles/skyBeam.css"
 import "../styles/style.css"
 import { getWeather } from "./api"
+import sunnyIcon from "../assets/sunny.svg"
+import partlyCloudyIcon from "../assets/partly-cloudy.svg"
+import cloudyIcon from "../assets/cloudy.svg"
+import rainIcon from "../assets/rain.svg"
+import thunderstormIcon from "../assets/thunderstorm.svg"
+import snow from "../assets/snow.svg"
 
 export default function SkyBeam() {
   const [unit, setUnit] = useState<"C" | "F">("C")
   const [temperature, settemperature] = useState<number | null>(null)
   const [feelsLike, setFeelsLike] = useState<number | null>(null)
+  const [weatherCode, setWeatherCode] = useState<number | null>(null)
   const [high, setHigh] = useState<number | null>(null)
   const [low, setLow] = useState<number | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
 
   function toggleUnit() {
     setUnit((current) => (current === "C" ? "F" : "C"))
@@ -28,6 +36,8 @@ export default function SkyBeam() {
           setFeelsLike(weather.feelsLike)
           setHigh(weather.high)
           setLow(weather.low)
+          setWeatherCode(weather.weatherCode)
+          setLastUpdated(new Date())
         }
       } catch (error) {
         if (!ignore) {
@@ -51,6 +61,87 @@ export default function SkyBeam() {
   const displayedFeelsLike = feelsLike === null ? null : unit === "F" ? feelsLike * (9 / 5) + 32 : feelsLike
   const displayedHigh = high === null ? null : unit === "F" ? high * (9 / 5) + 32 : high
   const displayedLow = low === null ? null : unit === "F" ? low * (9 / 5) + 32 : low
+  const weatherDescriptions: Record<number, string> = {
+    0: "Clear Sky",
+    1: "Mainly clear",
+    2: "Partly cloudy",
+    3: "Overcast",
+    45: "Fog",
+    48: "Depositing rime fog",
+    51: "Light drizzle",
+    53: "Moderate drizzle",
+    55: "Dense drizzle",
+    56: "Light freezing drizzle",
+    57: "Dense freezing drizzle",
+    61: "Light rain",
+    63: "Moderate rain",
+    65: "Heavy rain",
+    66: "Light freezing rain",
+    67: "Heavy freezing rain",
+    71: "Light snow",
+    73: "Moderate snow",
+    75: "Heavy snow",
+    77: "Snow grains",
+    80: "Light rain showers",
+    81: "Moderate rain showers",
+    82: "Violent rain showers",
+    85: "Light snow showers",
+    86: "Heavy snow showers",
+    95: "Thunderstorm",
+    96: "Thunderstorm with light hail",
+    97: "Heavy thunderstorm",
+    99: "Thunderstorm with heavy hail",
+  }
+  const displayedCondition =
+    loading || error || weatherCode === null ? "-" : (weatherDescriptions[weatherCode] ?? "Unknown conditions")
+
+  const weatherIcons: Record<number, string> = {
+    0: sunnyIcon,
+    1: sunnyIcon,
+    2: partlyCloudyIcon,
+    3: cloudyIcon,
+    51: rainIcon,
+    53: rainIcon,
+    55: rainIcon,
+    56: rainIcon,
+    57: rainIcon,
+    61: rainIcon,
+    63: rainIcon,
+    65: rainIcon,
+    66: rainIcon,
+    67: rainIcon,
+    71: snow,
+    73: snow,
+    75: snow,
+    77: snow,
+    80: rainIcon,
+    81: rainIcon,
+    82: rainIcon,
+    85: snow,
+    86: snow,
+    95: thunderstormIcon,
+    96: thunderstormIcon,
+    97: thunderstormIcon,
+    99: thunderstormIcon,
+  }
+
+  const displayedIcons = loading || error || weatherCode === null ? null : (weatherIcons[weatherCode] ?? null)
+  const displayedDate = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/Toronto",
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+  }).format(new Date())
+
+  const displayedLastUpdated =
+    lastUpdated === null
+      ? null
+      : new Intl.DateTimeFormat("en-CA", {
+          timeZone: "America/Toronto",
+          hour: "numeric",
+          minute: "2-digit",
+          timeZoneName: "short",
+        }).format(lastUpdated)
 
   return (
     <main className="main-container">
@@ -84,9 +175,12 @@ export default function SkyBeam() {
       </div>
       <section className="section-container">
         <h1 className="city">Toronto, ON</h1>
-        <div className="date">Monday, November 15</div>
+        <div className="date">{displayedDate}</div>
+        {!loading && !error && displayedLastUpdated !== null && (
+          <p className="last-updated">Last updated {displayedLastUpdated}</p>
+        )}
         <div className="weather-section">
-          <img className="weather-symbol" src="../src/assets/partly-cloudy.svg" alt="weather-symbol" />
+          {displayedIcons !== null && <img className="weather-symbol" src={displayedIcons} alt={displayedCondition} />}
           <div className="degrees">
             {loading ? (
               <span className="loading-txt">{"Loading"}</span>
@@ -97,7 +191,7 @@ export default function SkyBeam() {
             )}
           </div>
           <div className="description-container">
-            <div className="description">Partly Cloudy</div>
+            <div className="description">{displayedCondition}</div>
             <div className="feels-like-container">
               <div className="feels-like">
                 {loading || error || displayedFeelsLike === null
@@ -142,6 +236,11 @@ export default function SkyBeam() {
           </div>
           <div className="present-plus-4">
             <div className="now">4 pm</div>
+            <img className="hourly-img" src="../src/assets/sunny.svg" />
+            <div className="temperature">20°</div>
+          </div>
+          <div className="present-plus-5">
+            <div className="now">5 pm</div>
             <img className="hourly-img" src="../src/assets/sunny.svg" />
             <div className="temperature">20°</div>
           </div>

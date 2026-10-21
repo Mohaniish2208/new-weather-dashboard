@@ -188,10 +188,16 @@
 
 .feels-like,
 .high,
-.low {
+.low,
+.last-updated {
   font-family: var(--feels-like-details);
   font-size: var(--feels-like-size);
   font-weight: var(--feels-like-wgt);
+}
+
+.last-updated {
+  padding: 0 0.5rem;
+  margin-top: 0;
 }
 
 .feels-like-container {
@@ -221,7 +227,8 @@
 .present-plus-1,
 .present-plus-2,
 .present-plus-3,
-.present-plus-4 {
+.present-plus-4,
+.present-plus-5 {
   display: flex;
   flex-direction: column;
   align-items: center;
