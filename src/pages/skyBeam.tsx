@@ -19,6 +19,7 @@ export default function SkyBeam() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
+  const [hourlyForecast, setHourlyForecast] = useState<{ time: Date; temperature: number; weatherCode: number }[]>([])
 
   function toggleUnit() {
     setUnit((current) => (current === "C" ? "F" : "C"))
@@ -30,6 +31,8 @@ export default function SkyBeam() {
     async function loadWeather() {
       try {
         const weather = await getWeather(43.6532, -79.3832)
+        const now = Date.now()
+        const upcomingHours = weather.hourlyForecast.filter((entry) => entry.time.getTime() >= now).slice(0, 6)
 
         if (!ignore) {
           settemperature(weather.temperature)
@@ -38,6 +41,7 @@ export default function SkyBeam() {
           setLow(weather.low)
           setWeatherCode(weather.weatherCode)
           setLastUpdated(new Date())
+          setHourlyForecast(upcomingHours)
         }
       } catch (error) {
         if (!ignore) {
@@ -143,6 +147,12 @@ export default function SkyBeam() {
           timeZoneName: "short",
         }).format(lastUpdated)
 
+  const hourlyTimeFormatter = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/Toronto",
+    hour: "numeric",
+    hour12: true,
+  })
+
   return (
     <main className="main-container">
       <div className="site-container">
@@ -213,37 +223,21 @@ export default function SkyBeam() {
       <hr className="divider-page" />
       <section className="today-section">
         <h1 className="today">Today</h1>
+
         <div className="hourly-container">
-          <div className="present">
-            <div className="now">Now</div>
-            <img className="hourly-img" src="../src/assets/partly-cloudy.svg" />
-            <div className="temperature">20°</div>
-          </div>
-          <div className="present-plus-1">
-            <div className="now">1 pm</div>
-            <img className="hourly-img" src="../src/assets/cloudy.svg" />
-            <div className="temperature">20°</div>
-          </div>
-          <div className="present-plus-2">
-            <div className="now">2 pm</div>
-            <img className="hourly-img" src="../src/assets/partly-cloudy.svg" />
-            <div className="temperature">20°</div>
-          </div>
-          <div className="present-plus-3">
-            <div className="now">3 pm</div>
-            <img className="hourly-img" src="../src/assets/sunny.svg" />
-            <div className="temperature">20°</div>
-          </div>
-          <div className="present-plus-4">
-            <div className="now">4 pm</div>
-            <img className="hourly-img" src="../src/assets/sunny.svg" />
-            <div className="temperature">20°</div>
-          </div>
-          <div className="present-plus-5">
-            <div className="now">5 pm</div>
-            <img className="hourly-img" src="../src/assets/sunny.svg" />
-            <div className="temperature">20°</div>
-          </div>
+          {hourlyForecast.map((entry) => (
+            <div className="present" key={entry.time.getTime()}>
+              <div className="now">{hourlyTimeFormatter.format(entry.time)}</div>
+              {weatherIcons[entry.weatherCode] && (
+                <img
+                  className="hourly-img"
+                  src={weatherIcons[entry.weatherCode]}
+                  alt={weatherDescriptions[entry.weatherCode] ?? "Unknown conditions."}
+                />
+              )}
+              <div className="temperature">{entry.temperature.toFixed(0)}°C</div>
+            </div>
+          ))}
         </div>
       </section>
       <hr className="divider-page" />

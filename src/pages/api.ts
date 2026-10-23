@@ -6,7 +6,7 @@ export async function getWeather(latitude: number, longitude: number) {
     longitude,
     current: ["temperature_2m", "apparent_temperature", "weather_code"],
     daily: ["temperature_2m_max", "temperature_2m_min"],
-    hourly: ["temperature_2m"],
+    hourly: ["temperature_2m", "weather_code"],
     temperature_unit: "celsius",
     timezone: "auto",
   })
@@ -18,6 +18,7 @@ export async function getWeather(latitude: number, longitude: number) {
   const daily = response[0]?.daily()
   const hourly = response[0]?.hourly()
   const hourlyTemperatures = hourly?.variables(0)?.valuesArray()
+  const hourlyWeatherCodes = hourly?.variables(1)?.valuesArray()
   const high = daily?.variables(0)?.valuesArray()?.[0]
   const low = daily?.variables(1)?.valuesArray()?.[0]
 
@@ -45,6 +46,10 @@ export async function getWeather(latitude: number, longitude: number) {
     throw new Error("Hourly forecast is unavailable.")
   }
 
+  if (hourlyWeatherCodes == null || hourly == null) {
+    throw new Error("Hourly weather code is unavailable.")
+  }
+
   const hourlyStart = Number(hourly.time())
 
   const hourlyInterval = hourly.interval()
@@ -52,6 +57,7 @@ export async function getWeather(latitude: number, longitude: number) {
   const hourlyForecast = Array.from(hourlyTemperatures, (temperature, index) => ({
     time: new Date((hourlyStart + index * hourlyInterval) * 1000),
     temperature,
+    weatherCode: hourlyWeatherCodes[index],
   }))
 
   return { temperature, feelsLike, high, low, weatherCode, hourlyForecast }
