@@ -1,11 +1,10 @@
 import { fetchWeatherApi } from "openmeteo"
-
 export async function getWeather(latitude: number, longitude: number) {
   const response = await fetchWeatherApi("https://api.open-meteo.com/v1/forecast", {
     latitude,
     longitude,
     current: ["temperature_2m", "apparent_temperature", "weather_code"],
-    daily: ["temperature_2m_max", "temperature_2m_min"],
+    daily: ["temperature_2m_max", "temperature_2m_min", "weather_code"],
     hourly: ["temperature_2m", "weather_code"],
     temperature_unit: "celsius",
     timezone: "auto",
@@ -21,6 +20,9 @@ export async function getWeather(latitude: number, longitude: number) {
   const hourlyWeatherCodes = hourly?.variables(1)?.valuesArray()
   const high = daily?.variables(0)?.valuesArray()?.[0]
   const low = daily?.variables(1)?.valuesArray()?.[0]
+  const dailyHigh = daily?.variables(0)?.valuesArray()
+  const dailyLow = daily?.variables(1)?.valuesArray()
+  const dailyWeatherCodes = daily?.variables(2)?.valuesArray()
 
   if (temperature == null || !Number.isFinite(temperature)) {
     throw new Error("temperature value is unavailable.")
@@ -50,9 +52,24 @@ export async function getWeather(latitude: number, longitude: number) {
     throw new Error("Hourly weather code is unavailable.")
   }
 
-  const hourlyStart = Number(hourly.time())
+  if (dailyHigh == null || daily == null) {
+    throw new Error("Daily forecast is unavailable.")
+  }
 
+  if (dailyLow == null || daily == null) {
+    throw new Error("Daily forecast is unavailable.")
+  }
+
+  if (dailyWeatherCodes == null || daily == null) {
+    throw new Error("Daily forecast is unavailable.")
+  }
+
+  const hourlyStart = Number(hourly.time())
   const hourlyInterval = hourly.interval()
+
+  const dailyStart = Number(daily.time())
+  const dailyInterval = daily.interval()
+  const utcOffsetSeconds = response[0].utcOffsetSeconds()
 
   const hourlyForecast = Array.from(hourlyTemperatures, (temperature, index) => ({
     time: new Date((hourlyStart + index * hourlyInterval) * 1000),
@@ -60,5 +77,12 @@ export async function getWeather(latitude: number, longitude: number) {
     weatherCode: hourlyWeatherCodes[index],
   }))
 
-  return { temperature, feelsLike, high, low, weatherCode, hourlyForecast }
+  const dailyForecast = Array.from(dailyHigh, (high, index) => ({
+    high,
+    low: dailyLow[index],
+    weatherCode: dailyWeatherCodes[index],
+    time: new Date((dailyStart + index * dailyInterval + utcOffsetSeconds) * 1000),
+  }))
+
+  return { temperature, feelsLike, high, low, weatherCode, hourlyForecast, dailyForecast }
 }

@@ -20,6 +20,9 @@ export default function SkyBeam() {
   const [error, setError] = useState<string | null>(null)
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
   const [hourlyForecast, setHourlyForecast] = useState<{ time: Date; temperature: number; weatherCode: number }[]>([])
+  const [dailyForecast, setDailyForecast] = useState<{ time: Date; high: number; low: number; weatherCode: number }[]>(
+    [],
+  )
 
   function toggleUnit() {
     setUnit((current) => (current === "C" ? "F" : "C"))
@@ -42,6 +45,7 @@ export default function SkyBeam() {
           setWeatherCode(weather.weatherCode)
           setLastUpdated(new Date())
           setHourlyForecast(upcomingHours)
+          setDailyForecast(weather.dailyForecast.slice(0, 5))
         }
       } catch (error) {
         if (!ignore) {
@@ -104,6 +108,8 @@ export default function SkyBeam() {
     1: sunnyIcon,
     2: partlyCloudyIcon,
     3: cloudyIcon,
+    45: cloudyIcon,
+    48: cloudyIcon,
     51: rainIcon,
     53: rainIcon,
     55: rainIcon,
@@ -151,6 +157,11 @@ export default function SkyBeam() {
     timeZone: "America/Toronto",
     hour: "numeric",
     hour12: true,
+  })
+
+  const dailyDayFormatter = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "UTC",
+    weekday: "short",
   })
 
   return (
@@ -235,7 +246,9 @@ export default function SkyBeam() {
                   alt={weatherDescriptions[entry.weatherCode] ?? "Unknown conditions."}
                 />
               )}
-              <div className="temperature">{entry.temperature.toFixed(0)}°C</div>
+              <div className="temperature">
+                {(unit === "F" ? (entry.temperature * 9) / 5 + 32 : entry.temperature).toFixed(0)}°{unit}
+              </div>
             </div>
           ))}
         </div>
@@ -251,67 +264,26 @@ export default function SkyBeam() {
         </div>
         <hr className="sub-divider" />
 
-        <div className="today-sub-section">
-          <div className="current-day">Today</div>
-          <img className="weather-img" src="../src/assets/partly-cloudy.svg" />
-          <div className="sub-weather">Partly Cloudy</div>
-          <div className="sub-hi">20°</div>
-          <div className="sub-lo">17°</div>
-        </div>
-        <hr className="sub-divider" />
-
-        <div className="sub-section">
-          <div className="tuesday">Tue</div>
-          <img className="weather-img" src="../src/assets/partly-cloudy.svg" />
-          <div className="sub-weather">Partly Cloudy</div>
-          <div className="sub-hi">20°</div>
-          <div className="sub-lo">17°</div>
-        </div>
-        <hr className="sub-divider" />
-
-        <div className="sub-section">
-          <div className="wednesday">Wed</div>
-          <img className="weather-img" src="../src/assets/partly-cloudy.svg" />
-          <div className="sub-weather">Partly Cloudy</div>
-          <div className="sub-hi">20°</div>
-          <div className="sub-lo">17°</div>
-        </div>
-        <hr className="sub-divider" />
-
-        <div className="sub-section">
-          <div className="thursday">Thu</div>
-          <img className="weather-img" src="../src/assets/partly-cloudy.svg" />
-          <div className="sub-weather">Partly Cloudy</div>
-          <div className="sub-hi">20°</div>
-          <div className="sub-lo">17°</div>
-        </div>
-        <hr className="sub-divider" />
-
-        <div className="sub-section">
-          <div className="friday">Fri</div>
-          <img className="weather-img" src="../src/assets/partly-cloudy.svg" />
-          <div className="sub-weather">Partly Cloudy</div>
-          <div className="sub-hi">20°</div>
-          <div className="sub-lo">17°</div>
-        </div>
-        <hr className="sub-divider" />
-
-        <div className="sub-section">
-          <div className="saturday">Sat</div>
-          <img className="weather-img" src="../src/assets/partly-cloudy.svg" />
-          <div className="sub-weather">Partly Cloudy</div>
-          <div className="sub-hi">20°</div>
-          <div className="sub-lo">17°</div>
-        </div>
-        <hr className="sub-divider" />
-
-        <div className="sub-section">
-          <div className="sunday">Sun</div>
-          <img className="weather-img" src="../src/assets/partly-cloudy.svg" />
-          <div className="sub-weather">Partly Cloudy</div>
-          <div className="sub-hi">20°</div>
-          <div className="sub-lo">17°</div>
-        </div>
+        {dailyForecast.map((dayForecast, index) => (
+          <div className="new-wrapper" key={dayForecast.time.getTime()}>
+            <div className="today-sub-section">
+              <div className="current-day">{index === 0 ? "Today" : dailyDayFormatter.format(dayForecast.time)}</div>
+              <img
+                className="weather-img"
+                src={weatherIcons[dayForecast.weatherCode]}
+                alt={weatherDescriptions[dayForecast.weatherCode] ?? "Unknown conditions"}
+              />
+              <div className="sub-weather">{weatherDescriptions[dayForecast.weatherCode] ?? "Unknown conditions"}</div>
+              <div className="sub-hi">
+                {(unit === "F" ? (dayForecast.high * 9) / 5 + 32 : dayForecast.high).toFixed(0)}°{unit}
+              </div>
+              <div className="sub-lo">
+                {(unit === "F" ? (dayForecast.low * 9) / 5 + 32 : dayForecast.low).toFixed(0)}°{unit}
+              </div>
+            </div>
+            <hr className="sub-divider" />
+          </div>
+        ))}
       </section>
       <hr className="divider-page" />
     </main>
