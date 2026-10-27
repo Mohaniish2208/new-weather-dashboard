@@ -1,4 +1,34 @@
 import { fetchWeatherApi } from "openmeteo"
+export type citySearchResult = {
+  id: number
+  name: string
+  latitude: number
+  longitude: number
+  timezone: string
+  country?: string
+  admin1?: string
+}
+
+export async function searchCities(query: string) {
+  const params = new URLSearchParams({
+    name: query.trim(),
+    count: "5",
+    language: "en",
+  })
+
+  const url = `https://geocoding-api.open-meteo.com/v1/search?${params}`
+
+  const response = await fetch(url)
+
+  if (!response.ok) {
+    throw new Error("Unable to search for cities.")
+  }
+
+  const data: { results?: citySearchResult[] } = await response.json()
+
+  return data.results ?? []
+}
+
 export async function getWeather(latitude: number, longitude: number) {
   const response = await fetchWeatherApi("https://api.open-meteo.com/v1/forecast", {
     latitude,

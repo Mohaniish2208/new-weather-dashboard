@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, type SubmitEvent } from "react"
 import "../styles/skyBeam.css"
 import "../styles/style.css"
-import { getWeather } from "./api"
+import { getWeather, searchCities, type citySearchResult } from "./api"
 import sunnyIcon from "../assets/sunny.svg"
 import partlyCloudyIcon from "../assets/partly-cloudy.svg"
 import cloudyIcon from "../assets/cloudy.svg"
@@ -23,6 +23,46 @@ export default function SkyBeam() {
   const [dailyForecast, setDailyForecast] = useState<{ time: Date; high: number; low: number; weatherCode: number }[]>(
     [],
   )
+  const [searchQuery, setSearchQuery] = useState("")
+  const [searchResult, setSearchResult] = useState<citySearchResult[]>([])
+  const [searchLoading, setSearchLoading] = useState(false)
+  const [searchError, setSearchError] = useState<string | null>(null)
+  const [selectedCity, setSelectedCity] = useState<citySearchResult | null>(null)
+
+  function handleSelectedCity(city: citySearchResult) {
+    setSelectedCity(city)
+    setSearchQuery([city.name, city.admin1, city.country].filter(Boolean).join(", "))
+    setSearchResult([])
+    setSearchError(null)
+  }
+
+  async function handleSearch(event: SubmitEvent<HTMLFormElement>) {
+    event.preventDefault()
+
+    if (searchLoading) return
+    const query = searchQuery.trim()
+
+    setSearchResult([])
+    setSearchError(null)
+
+    if (!query) return
+
+    setSearchLoading(true)
+
+    try {
+      const cities = await searchCities(query)
+
+      setSearchResult(cities)
+
+      if (cities.length === 0) {
+        setSearchError("No cities found.")
+      }
+    } catch (error) {
+      setSearchError(error instanceof Error ? error.message : "Unable to search for cities.")
+    } finally {
+      setSearchLoading(false)
+    }
+  }
 
   function toggleUnit() {
     setUnit((current) => (current === "C" ? "F" : "C"))
@@ -32,8 +72,13 @@ export default function SkyBeam() {
     let ignore = false
 
     async function loadWeather() {
+      setLoading(true)
+      setError(null)
+      setHourlyForecast([])
+      setDailyForecast([])
+
       try {
-        const weather = await getWeather(43.6532, -79.3832)
+        const weather = await getWeather(selectedCity?.latitude ?? 43.6532, selectedCity?.longitude ?? -79.3832)
         const now = Date.now()
         const upcomingHours = weather.hourlyForecast.filter((entry) => entry.time.getTime() >= now).slice(0, 6)
 
@@ -63,7 +108,7 @@ export default function SkyBeam() {
     return () => {
       ignore = true
     }
-  }, [])
+  }, [selectedCity])
 
   const displayedtemperature = temperature === null ? null : unit === "F" ? temperature * (9 / 5) + 32 : temperature
   const displayedFeelsLike = feelsLike === null ? null : unit === "F" ? feelsLike * (9 / 5) + 32 : feelsLike
@@ -177,7 +222,33 @@ export default function SkyBeam() {
               </div>
             </div>
           </div>
-          <input className="searchbar" placeholder="Search the city" type="form" />
+          <div className="city-search">
+            <form onSubmit={handleSearch}>
+              <input
+                className="searchbar"
+                value={searchQuery}
+                onChange={(event) => setSearchQuery(event.target.value)}
+                placeholder="Search for a city"
+                aria-label="Search for a city"
+                type="search"
+              />
+            </form>
+
+            {searchError && <p role="alert">{searchError}</p>}
+
+            {searchResult.length > 0 && (
+              <ul>
+                {searchResult.map((city) => (
+                  <li className="city-list" key={city.id}>
+                    <button type="button" onClick={() => handleSelectedCity(city)}>
+                      {[city.name, city.admin1, city.country].filter(Boolean).join(", ")}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+
           <div className="button-container">
             <button
               type="button"
@@ -195,7 +266,9 @@ export default function SkyBeam() {
         <hr className="divider-header" />
       </div>
       <section className="section-container">
-        <h1 className="city">Toronto, ON</h1>
+        <h1 className="city">
+          {selectedCity ? [selectedCity.name, selectedCity.admin1].filter(Boolean).join(", ") : "Toronto, ON"}
+        </h1>
         <div className="date">{displayedDate}</div>
         {!loading && !error && displayedLastUpdated !== null && (
           <p className="last-updated">Last updated {displayedLastUpdated}</p>

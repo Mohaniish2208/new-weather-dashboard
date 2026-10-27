@@ -223,6 +223,10 @@
   gap: 7.5rem;
 }
 
+.city-list {
+  cursor: pointer;
+}
+
 .present,
 .present-plus-1,
 .present-plus-2,
