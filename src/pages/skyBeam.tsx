@@ -1,4 +1,4 @@
-import { useEffect, useState, type SubmitEvent } from "react"
+import { useEffect, useState } from "react"
 import "../styles/skyBeam.css"
 import "../styles/style.css"
 import { getWeather, searchCities, type citySearchResult } from "./api"
@@ -28,41 +28,56 @@ export default function SkyBeam() {
   const [searchLoading, setSearchLoading] = useState(false)
   const [searchError, setSearchError] = useState<string | null>(null)
   const [selectedCity, setSelectedCity] = useState<citySearchResult | null>(null)
+  const [searchActive, setSearchActive] = useState(false)
 
   function handleSelectedCity(city: citySearchResult) {
     setSelectedCity(city)
     setSearchQuery([city.name, city.admin1, city.country].filter(Boolean).join(", "))
     setSearchResult([])
     setSearchError(null)
+    setSearchActive(false)
   }
 
-  async function handleSearch(event: SubmitEvent<HTMLFormElement>) {
-    event.preventDefault()
-
-    if (searchLoading) return
+  useEffect(() => {
     const query = searchQuery.trim()
+
+    if (!searchActive || query.length < 2) return
 
     setSearchResult([])
     setSearchError(null)
+    setSearchLoading(false)
 
-    if (!query) return
+    const controller = new AbortController()
 
-    setSearchLoading(true)
+    const timeoutId = window.setTimeout(async () => {
+      setSearchLoading(true)
 
-    try {
-      const cities = await searchCities(query)
+      try {
+        const cities = await searchCities(query, controller.signal)
 
-      setSearchResult(cities)
+        if (controller.signal.aborted) return
 
-      if (cities.length === 0) {
-        setSearchError("No cities found.")
+        setSearchResult(cities)
+
+        if (cities.length === 0) {
+          setSearchError("No cities found.")
+        }
+      } catch (error) {
+        if (controller.signal.aborted) return
+
+        setSearchError(error instanceof Error ? error.message : "Unable to search for cities.")
+      } finally {
+        if (!controller.signal.aborted) {
+          setSearchLoading(false)
+        }
       }
-    } catch (error) {
-      setSearchError(error instanceof Error ? error.message : "Unable to search for cities.")
-    } finally {
-      setSearchLoading(false)
+    }, 200)
+
+    return () => {
+      window.clearTimeout(timeoutId)
+      controller.abort()
     }
-  }
+  }, [searchQuery, searchActive])
 
   function toggleUnit() {
     setUnit((current) => (current === "C" ? "F" : "C"))
@@ -223,29 +238,37 @@ export default function SkyBeam() {
             </div>
           </div>
           <div className="city-search">
-            <form onSubmit={handleSearch}>
-              <input
-                className="searchbar"
-                value={searchQuery}
-                onChange={(event) => setSearchQuery(event.target.value)}
-                placeholder="Search for a city"
-                aria-label="Search for a city"
-                type="search"
-              />
-            </form>
+            <input
+              className="searchbar"
+              value={searchQuery}
+              onChange={(event) => {
+                setSearchQuery(event.target.value)
+                setSearchActive(true)
+              }}
+              placeholder="Search for a city"
+              aria-label="Search for a city"
+              type="search"
+              autoComplete="off"
+            />
 
-            {searchError && <p role="alert">{searchError}</p>}
+            {(searchLoading || searchError || searchResult.length > 0) && (
+              <div className="search-dropdown">
+                {searchLoading && <p role="status">Searching...</p>}
 
-            {searchResult.length > 0 && (
-              <ul>
-                {searchResult.map((city) => (
-                  <li className="city-list" key={city.id}>
-                    <button type="button" onClick={() => handleSelectedCity(city)}>
-                      {[city.name, city.admin1, city.country].filter(Boolean).join(", ")}
-                    </button>
-                  </li>
-                ))}
-              </ul>
+                {searchError && <p role="alert">{searchError}</p>}
+
+                {searchResult.length > 0 && (
+                  <ul className="unordered-list">
+                    {searchResult.map((city) => (
+                      <li className="city-list" key={city.id}>
+                        <button className="button-list" type="button" onClick={() => handleSelectedCity(city)}>
+                          {[city.name, city.admin1, city.country].filter(Boolean).join(", ")}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
             )}
           </div>
 

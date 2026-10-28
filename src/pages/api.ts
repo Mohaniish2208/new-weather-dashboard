@@ -9,7 +9,7 @@ export type citySearchResult = {
   admin1?: string
 }
 
-export async function searchCities(query: string) {
+export async function searchCities(query: string, signal?: AbortSignal) {
   const params = new URLSearchParams({
     name: query.trim(),
     count: "5",
@@ -18,7 +18,7 @@ export async function searchCities(query: string) {
 
   const url = `https://geocoding-api.open-meteo.com/v1/search?${params}`
 
-  const response = await fetch(url)
+  const response = await fetch(url, { signal })
 
   if (!response.ok) {
     throw new Error("Unable to search for cities.")
