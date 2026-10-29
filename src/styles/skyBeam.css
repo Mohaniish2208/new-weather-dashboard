@@ -98,9 +98,9 @@
   overflow-y: auto;
   border: 1px solid rgb(209, 213, 219);
   border-radius: 1rem;
-  background: rgb(229, 231, 235 / 65%);
-  backdrop-filter: blur(1rem);
-  border: 1px solid rgb(255 255 255 / 40%);
+  border-bottom: 0.1rem solid grey;
+  background: rgb(229, 231, 235, 55%);
+  backdrop-filter: blur(0.08rem);
 }
 
 .button-list {
@@ -108,7 +108,12 @@
   font-weight: 600;
   border: none;
   cursor: pointer;
-  line-height: 1.2rem;
+  line-height: 1.29rem;
+}
+
+.button-list:hover {
+  transform: scaleX(1.05);
+  background-color: rgba(179, 235, 96, 0.2);
 }
 
 .search-dropdown p,
@@ -116,6 +121,12 @@
 .search-dropdown ul,
 .search-dropdown button {
   background: transparent;
+}
+
+.search-dropdown p {
+  font-family: var(--description), sans-serif;
+  font-weight: var(--week-wgt);
+  padding: 1rem;
 }
 
 .unit-toggle {

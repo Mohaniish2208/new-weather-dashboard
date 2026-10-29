@@ -41,11 +41,11 @@ export default function SkyBeam() {
   useEffect(() => {
     const query = searchQuery.trim()
 
-    if (!searchActive || query.length < 2) return
-
     setSearchResult([])
     setSearchError(null)
     setSearchLoading(false)
+
+    if (!searchActive || query.length < 2) return
 
     const controller = new AbortController()
 
@@ -197,7 +197,7 @@ export default function SkyBeam() {
 
   const displayedIcons = loading || error || weatherCode === null ? null : (weatherIcons[weatherCode] ?? null)
   const displayedDate = new Intl.DateTimeFormat("en-CA", {
-    timeZone: "America/Toronto",
+    timeZone: selectedCity?.timezone ?? "America/Toronto",
     weekday: "long",
     month: "long",
     day: "numeric",
@@ -207,14 +207,14 @@ export default function SkyBeam() {
     lastUpdated === null
       ? null
       : new Intl.DateTimeFormat("en-CA", {
-          timeZone: "America/Toronto",
+          timeZone: selectedCity?.timezone ?? "America/Toronto",
           hour: "numeric",
           minute: "2-digit",
           timeZoneName: "short",
         }).format(lastUpdated)
 
   const hourlyTimeFormatter = new Intl.DateTimeFormat("en-CA", {
-    timeZone: "America/Toronto",
+    timeZone: selectedCity?.timezone ?? "America/Toronto",
     hour: "numeric",
     hour12: true,
   })
