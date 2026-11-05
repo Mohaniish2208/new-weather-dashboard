@@ -4,6 +4,7 @@ import "../styles/style.css"
 import { getWeather, searchCities, type citySearchResult } from "./api"
 import sunnyIcon from "../assets/sunny.svg"
 import partlyCloudyIcon from "../assets/partly-cloudy.svg"
+import weatherIcon from "../assets/weather-icon.svg"
 import cloudyIcon from "../assets/cloudy.svg"
 import rainIcon from "../assets/rain.svg"
 import thunderstormIcon from "../assets/thunderstorm.svg"
@@ -228,7 +229,7 @@ export default function SkyBeam() {
     <main className="main-container">
       <div className="site-container">
         <div className="header">
-          <img className="icon" src="../src/assets/weather-icon.svg" alt="icon" />
+          <img className="icon" src={weatherIcon} alt="SkyBeam Logo" />
           <div className="title-and-text">
             <h1 className="title">SkyBeam</h1>
             <div className="supportive-text-container">

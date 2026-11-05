@@ -16,16 +16,20 @@ SkyBeam brings current conditions, upcoming hourly temperatures, and a five-day 
 
 The dashboard opens with **Toronto, Ontario** as its default location.
 
+## Live Demo
+
+[View SkyBeam on Vercel](https://new-weather-dashboard-peach.vercel.app/)
+
 ## Tech stack
 
-| Technology | Purpose |
-| --- | --- |
-| React | Components, state, and effects |
-| TypeScript | Typed application code and API data |
-| Vite | Development server and production bundling |
-| Open-Meteo SDK | Weather forecast requests |
-| Fetch API | City search requests |
-| CSS and SVG | Layout, styling, and weather icons |
+| Technology     | Purpose                                    |
+| -------------- | ------------------------------------------ |
+| React          | Components, state, and effects             |
+| TypeScript     | Typed application code and API data        |
+| Vite           | Development server and production bundling |
+| Open-Meteo SDK | Weather forecast requests                  |
+| Fetch API      | City search requests                       |
+| CSS and SVG    | Layout, styling, and weather icons         |
 
 ## Getting started
 
@@ -59,11 +63,11 @@ Search waits briefly after typing before requesting up to five matches. Weather 
 
 ## Available scripts
 
-| Command | Description |
-| --- | --- |
+| Command                 | Description                                                        |
+| ----------------------- | ------------------------------------------------------------------ |
 | `npm run dev -- --host` | Start the Vite development server for viewing in multiple devices. |
-| `npm run build` | Run TypeScript checks and create a production build in `dist/`. |
-| `npm run preview` | Serve the production build locally for inspection. |
+| `npm run build`         | Run TypeScript checks and create a production build in `dist/`.    |
+| `npm run preview`       | Serve the production build locally for inspection.                 |
 
 To build and preview:
 
