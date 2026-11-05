@@ -20,6 +20,24 @@ The dashboard opens with **Toronto, Ontario** as its default location.
 
 [View SkyBeam on Vercel](https://new-weather-dashboard-peach.vercel.app/)
 
+## Screenshots
+
+### Dashboard overview
+
+SkyBeam displays Toronto’s current weather, including temperature,
+feels-like temperature, daily highs and lows, and the last update time.
+The header includes city search and a Celsius/Fahrenheit toggle.
+
+![Dashboard](src/assets//SkyBeam-001.png)
+
+### Hourly and five-day forecasts
+
+The forecast section shows the next six hourly predictions, followed
+by a five-day outlook with weather icons, condition descriptions,
+and daily high and low temperatures.
+
+![Forecast](src/assets/SkyBeam-002.png)
+
 ## Tech stack
 
 | Technology     | Purpose                                    |
