@@ -61,7 +61,7 @@ Search waits briefly after typing before requesting up to five matches. Weather 
 
 | Command | Description |
 | --- | --- |
-| `npm run dev` | Start the Vite development server. |
+| `npm run dev -- --host` | Start the Vite development server for viewing in multiple devices. |
 | `npm run build` | Run TypeScript checks and create a production build in `dist/`. |
 | `npm run preview` | Serve the production build locally for inspection. |
 
