@@ -1,4 +1,7 @@
 @import "./fontsAndVars.css";
+body {
+  box-sizing: border-box;
+}
 
 .header {
   display: flex;
@@ -188,7 +191,7 @@
 }
 
 .section-container {
-  padding: 0 20rem;
+  padding: 0 20svw;
 }
 
 .city {
@@ -267,7 +270,7 @@
 }
 
 .today-section {
-  padding: 1rem 20rem;
+  padding: 0 15svw;
 }
 
 .today {
@@ -280,6 +283,12 @@
   display: flex;
   flex-direction: row;
   gap: 7.5rem;
+}
+
+.now {
+  display: flex;
+  justify-content: center;
+  width: 5rem;
 }
 
 .present,
@@ -389,4 +398,12 @@
 .sub-section {
   padding: 0.5rem 0;
   font-size: 0.85rem;
+}
+
+@media (max-width: 768px) {
+  .section-container {
+    display: flex;
+    align-items: center;
+    padding: 0 5rem;
+  }
 }
