@@ -37,7 +37,12 @@ The forecast section shows the next six hourly predictions, followed
 by a five-day outlook with weather icons, condition descriptions,
 and daily high and low temperatures.
 
+### Celcius
+
 ![Forecast(Celcius)](src/assets/SkyBeam-002.png)
+
+### Fahrenheit
+
 ![Forecast(Fahrenheit)](src/assets/SkyBeam-004.png)
 
 ## Tech stack
