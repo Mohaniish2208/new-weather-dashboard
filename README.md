@@ -28,7 +28,12 @@ SkyBeam displays Toronto’s current weather, including temperature,
 feels-like temperature, daily highs and lows, and the last update time.
 The header includes city search and a Celsius/Fahrenheit toggle.
 
+### Celcius
+
 ![Dashboard(Celcuis)](src/assets//SkyBeam-001.png)
+
+### Fahrenheit
+
 ![Dashboard(Fahrenheit)](src/assets/SkyBeam-003.png)
 
 ### Hourly and five-day forecasts
